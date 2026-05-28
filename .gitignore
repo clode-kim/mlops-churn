@@ -1,0 +1,61 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+
+# 가상환경
+.venv/
+venv/
+env/
+
+# 시크릿 & 환경변수 (절대 커밋 금지)
+.env
+.env.*
+*.pem
+*.key
+
+# 데이터 (원본은 Kaggle에서 받는 것, 용량 큼)
+data/raw/
+data/processed/
+
+# MLflow 로컬 실험 로그 (Phase 2에서 AKS 위 서버로 이전)
+mlruns/
+mlartifacts/
+
+# EDA 노트북 (탐색용, 재현성 보장 불필요)
+notebooks/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Terraform 상태 & 시크릿
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/*.tfvars
+terraform/override.tf
+terraform/override.tf.json
+
+# Claude Code
+CLAUDE.md
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# pytest 캐시
+.pytest_cache/
+.coverage
+htmlcov/
