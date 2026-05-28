@@ -1,3 +1,4 @@
+import os
 import mlflow
 import mlflow.sklearn
 import pandas as pd
@@ -67,6 +68,7 @@ def train():
         X, y, test_size=0.2, random_state=42, stratify=y
     )
 
+    mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", "http://20.200.246.155:5000"))
     mlflow.set_experiment("churn-prediction")
 
     with mlflow.start_run():

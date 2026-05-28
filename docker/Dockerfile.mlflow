@@ -1,0 +1,6 @@
+FROM ghcr.io/mlflow/mlflow:v2.17.2
+
+# Azure Blob Storage 연결 + PostgreSQL 드라이버 추가
+RUN pip install --no-cache-dir \
+    azure-storage-blob==12.23.1 \
+    psycopg2-binary==2.9.9

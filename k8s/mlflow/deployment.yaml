@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlflow
+  namespace: mlflow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mlflow
+  template:
+    metadata:
+      labels:
+        app: mlflow
+    spec:
+      containers:
+      - name: mlflow
+        image: mlchurndevacr.azurecr.io/mlflow:v2.17.2
+        ports:
+        - containerPort: 5000
+        env:
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mlflow-secrets
+              key: postgres-password
+        - name: AZURE_STORAGE_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: mlflow-secrets
+              key: storage-connection-string
+        command:
+        - /bin/sh
+        - -c
+        - |
+          mlflow server \
+            --backend-store-uri "postgresql://pgadmin:${POSTGRES_PASSWORD}@psql-mlchurn-dev.postgres.database.azure.com:5432/mlflow?sslmode=require" \
+            --artifacts-destination "wasbs://mlflow-artifacts@mlchurndev67c2289b.blob.core.windows.net/" \
+            --host 0.0.0.0 \
+            --port 5000 \
+            --workers 1
+        resources:
+          requests:
+            cpu: 100m
+            memory: 512Mi
+          limits:
+            cpu: 500m
+            memory: 1Gi
